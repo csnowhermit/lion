@@ -1,0 +1,66 @@
+/**
+ * FileName: ServerEventListener
+ * Author:   Ren Xiaotian
+ * Date:     2018/11/21 16:24
+ */
+
+package com.lion.vip.api.common;
+
+import com.lion.vip.api.event.*;
+import com.lion.vip.api.spi.Plugin;
+
+public interface ServerEventListener extends Plugin {
+    /**
+     * 该事件通过guava EventBus发出，实现接口的方法必须增加
+     *
+     * <code>@Subscribe 和 @AllowConcurrentEvents</code>注解，
+     * 并在构造函数调用EventBus.register(this);
+     */
+    default void on(ServerStartupEvent event) {
+    }
+
+    /**
+     * 该事件通过guava EventBus发出，实现接口的方法必须增加
+     *
+     * <code>@Subscribe 和 @AllowConcurrentEvents</code>注解，
+     * 并在构造函数调用EventBus.register(this);
+     */
+    default void on(ServerShutdownEvent server) {
+    }
+
+    /**
+     * 该事件通过guava EventBus发出，实现接口的方法必须增加
+     *
+     * <code>@Subscribe 和 @AllowConcurrentEvents</code>注解，
+     * 并在构造函数调用EventBus.register(this);
+     */
+    default void on(RouterChangeEvent event) {
+    }
+
+    /**
+     * 该事件通过guava EventBus发出，实现接口的方法必须增加
+     *
+     * <code>@Subscribe 和 @AllowConcurrentEvents</code>注解，
+     * 并在构造函数调用EventBus.register(this);
+     */
+    default void on(KickUserEvent event) {
+    }
+
+    /**
+     * 该事件通过guava EventBus发出，实现接口的方法必须增加
+     *
+     * <code>@Subscribe 和 @AllowConcurrentEvents</code>注解，
+     * 并在构造函数调用EventBus.register(this);
+     */
+    default void on(UserOnlineEvent event) {
+    }
+
+    /**
+     * 该事件通过guava EventBus发出，实现接口的方法必须增加
+     *
+     * <code>@Subscribe 和 @AllowConcurrentEvents</code>注解，
+     * 并在构造函数调用EventBus.register(this);
+     */
+    default void on(UserOfflineEvent event) {
+    }
+}

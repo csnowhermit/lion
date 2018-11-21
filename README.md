@@ -1,0 +1,11 @@
+模块说明：
+1.lion-api：定义了lion相关核心接口及协议，包括对外暴露的SPI接口；
+2.lion-boot：服务端启动入口模块，主要控制Server启动、停止流程；
+3.lion-cache：redi缓存模块，支持单机模式和3.x集群模式，包括用户路由，上下线消息等；
+4.lion-client：服务端SDK，主要提供发送Push的接口给其他业务使用；
+5.lion-common：定义了lion-client模块和lion-core模块都会用到的类，主要是消息、路由等；
+6.lion-core：Sercer核心模块，包括接入服务、网关服务、路由中心、推送中心等；
+7.lion-monitor：服务监控模块，主要监控JVM，线程池，JMX，服务状态统计，性能统计等；
+8.lion-network：主要提供netty相关的基础类，像NettyServer、NettyClient等；
+9.lion-registion：zookeeper的client，包括path的定义，节点定义，数据监听等；
+10.lion-tools：lion用到的一些工具类，包括线程池，加解密，配置文件解析等；

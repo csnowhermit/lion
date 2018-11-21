@@ -12,6 +12,7 @@
     <artifactId>lion-api</artifactId>
 
     <name>lion-api</name>
+    <description>Lion 消息推送系统 API模块</description>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -27,6 +28,22 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-transport</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec-http</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-buffer</artifactId>
+            <version>4.1.24.Final</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
