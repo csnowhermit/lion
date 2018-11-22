@@ -59,7 +59,7 @@ public class JsonPacket extends Packet {
 
     @Override
     public Object toFrame(Channel channel) {
-        byte[] json = Json.toJson(this).getBytes(Constants.UTF_8);
+        byte[] json = Json.JSON.toJson(this).getBytes(Constants.UTF_8);
         return new TextWebSocketFrame(Unpooled.wrappedBuffer(json));
     }
 

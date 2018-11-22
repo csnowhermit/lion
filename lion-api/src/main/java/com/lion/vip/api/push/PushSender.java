@@ -8,6 +8,7 @@ package com.lion.vip.api.push;
 
 import com.lion.vip.api.LionContext;
 import com.lion.vip.api.service.Service;
+import com.lion.vip.api.spi.client.PusherFactory;
 
 import java.util.concurrent.FutureTask;
 
@@ -22,7 +23,7 @@ public interface PushSender extends Service {
      * @return
      */
     static PushSender create() {
-        return PusherFactory.create();
+        return (PushSender) PusherFactory.create();
     }
 
     /**

@@ -14,15 +14,15 @@ import java.util.Arrays;
  * 推送结果
  */
 public class PushResult {
-    private static final int CODE_SUCCESS = 1;
-    private static final int CODE_FAILURE = 2;
-    private static final int CODE_OFFLINE = 3;
-    private static final int CODE_TIMEOUT = 4;
+    public static final int CODE_SUCCESS = 1;
+    public static final int CODE_FAILURE = 2;
+    public static final int CODE_OFFLINE = 3;
+    public static final int CODE_TIMEOUT = 4;
 
-    private int resultCode;
-    private String userId;
-    private Object[] timeLine;
-    private ClientLocation location;
+    public int resultCode;
+    public String userId;
+    public Object[] timeLine;
+    public ClientLocation location;
 
 
     public int getResultCode() {
