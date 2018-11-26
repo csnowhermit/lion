@@ -7,10 +7,10 @@
 package com.lion.vip.api.connection;
 
 import com.lion.vip.api.protocol.Packet;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 
-import java.nio.channels.Channel;
 
 /**
  * 连接 接口
