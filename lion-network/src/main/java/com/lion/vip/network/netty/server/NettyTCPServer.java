@@ -40,9 +40,7 @@ public abstract class NettyTCPServer extends BaseService implements Server {
         Starting,
         Started,
         Shutdown
-    }
-
-    ;
+    };
 
     protected final AtomicReference<State> serverState = new AtomicReference<>(State.Created);
 
