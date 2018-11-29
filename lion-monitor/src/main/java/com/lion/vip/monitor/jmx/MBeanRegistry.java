@@ -68,25 +68,34 @@ public class MBeanRegistry {
     }
 
     private ObjectName makeObjectName(String path, MBeanInfo bean) throws MalformedObjectNameException {
-        if (path == null){
+        if (path == null) {
             return null;
         }
 
         StringBuilder beanName = new StringBuilder(DOMAIN).append(":");
         int counter = 0;
         counter = tokenize(beanName, path, counter);
-        beanName.deleteCharAt(beanName.length()-1);
-        try{
+        tokenize(beanName, bean.getName(), counter);
+        beanName.deleteCharAt(beanName.length() - 1);
+        try {
             return new ObjectName(beanName.toString());
-        }catch (MalformedObjectNameException e){
+        } catch (MalformedObjectNameException e) {
             LOGGER.warn("Invalid name \"" + beanName.toString() + "\" for class "
                     + bean.getClass().toString());
             throw e;
         }
     }
 
-    private int tokenize(StringBuilder beanName, String path, int counter) {
-        
+    private int tokenize(StringBuilder sb, String path, int index) {
+        String[] tokens = path.split("/");
+        for (String s : tokens) {
+            if (s.length() == 0) {
+                continue;
+            }
+            sb.append("name").append(index++)
+                    .append("=").append(s).append(",");
+        }
+        return index;
     }
 
     protected String makeFullPath(String prefix, MBeanInfo bean) {
@@ -117,9 +126,47 @@ public class MBeanRegistry {
         return sb.toString();
     }
 
+    /**
+     * 取消注册
+     *
+     * @param path
+     * @param bean
+     */
+    private void unregister(String path, MBeanInfo bean) {
+        if (path == null) {
+            return;
+        }
+        try {
+            mBeanServer.unregisterMBean(makeObjectName(path, bean));
+        } catch (JMException e) {
+            LOGGER.error("Failed to unregister MBean " + bean.getName());
+            throw new MException(e);
+        }
+    }
 
+    public void unregister(MBeanInfo bean) {
+        if (bean == null) {
+            return;
+        }
 
+        String path = mapBean2Path.get(bean);
+        unregister(path, bean);
+        mapBean2Path.remove(bean);
+    }
 
+    /**
+     * 所有的MBean都反注册
+     */
+    public void unregister() {
+        for (Map.Entry<MBeanInfo, String> entry : mapBean2Path.entrySet()) {
+            try {
+                unregister(entry.getValue(), entry.getKey());
+            } catch (MException e) {
+                LOGGER.warn("Error during unregister, ", e);
+            }
+        }
+        mapBean2Path.clear();
+    }
 
 
 //    public static void main(String[] args) {
