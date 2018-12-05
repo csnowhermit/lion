@@ -1,9 +1,3 @@
-/**
- * FileName: DefaultExecutor
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:39
- */
-
 package com.lion.vip.tools.thread.pool;
 
 import java.util.concurrent.*;

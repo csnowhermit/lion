@@ -1,9 +1,3 @@
-/**
- * FileName: ThreadNames
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:38
- */
-
 package com.lion.vip.tools.thread;
 
 public class ThreadNames {

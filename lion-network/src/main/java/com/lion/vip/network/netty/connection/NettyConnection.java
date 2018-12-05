@@ -1,9 +1,3 @@
-/**
- * FileName: NettyConnection
- * Author:   Ren Xiaotian
- * Date:     2018/11/23 15:13
- */
-
 package com.lion.vip.network.netty.connection;
 
 import com.lion.vip.api.connection.Connection;

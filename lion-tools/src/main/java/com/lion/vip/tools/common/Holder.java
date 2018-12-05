@@ -1,9 +1,3 @@
-/**
- * FileName: Holder
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:08
- */
-
 package com.lion.vip.tools.common;
 
 public class Holder<T> {

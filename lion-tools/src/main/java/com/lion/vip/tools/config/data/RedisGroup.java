@@ -1,9 +1,3 @@
-/**
- * FileName: RedisGroup
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:15
- */
-
 package com.lion.vip.tools.config.data;
 
 import java.util.Collections;

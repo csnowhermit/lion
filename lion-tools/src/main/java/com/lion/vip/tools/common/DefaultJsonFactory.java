@@ -1,9 +1,3 @@
-/**
- * FileName: DefaultJsonFactory
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:07
- */
-
 package com.lion.vip.tools.common;
 
 import com.lion.vip.api.spi.Spi;

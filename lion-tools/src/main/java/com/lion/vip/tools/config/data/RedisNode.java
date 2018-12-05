@@ -1,9 +1,3 @@
-/**
- * FileName: RedisNode
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:16
- */
-
 package com.lion.vip.tools.config.data;
 
 /**

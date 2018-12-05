@@ -1,9 +1,3 @@
-/**
- * FileName: JVMUtil
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 15:38
- */
-
 package com.lion.vip.tools.common;
 
 import com.lion.vip.tools.Utils;

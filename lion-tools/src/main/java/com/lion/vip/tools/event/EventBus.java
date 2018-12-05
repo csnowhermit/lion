@@ -1,9 +1,3 @@
-/**
- * FileName: EventBus
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:33
- */
-
 package com.lion.vip.tools.event;
 
 import com.google.common.eventbus.AsyncEventBus;

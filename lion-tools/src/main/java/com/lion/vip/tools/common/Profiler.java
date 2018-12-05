@@ -1,9 +1,3 @@
-/**
- * FileName: Profiler
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 15:49
- */
-
 package com.lion.vip.tools.common;
 
 import com.lion.vip.tools.config.CC;

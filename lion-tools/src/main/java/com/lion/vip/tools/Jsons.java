@@ -1,9 +1,3 @@
-/**
- * FileName: Jsons
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 14:27
- */
-
 package com.lion.vip.tools;
 
 import com.alibaba.fastjson.JSON;

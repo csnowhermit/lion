@@ -1,9 +1,3 @@
-/**
- * FileName: DumpThreadRejectedHandler
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:41
- */
-
 package com.lion.vip.tools.thread.pool;
 
 import com.lion.vip.tools.Utils;

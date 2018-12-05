@@ -1,9 +1,3 @@
-/**
- * FileName: CryptoException
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:28
- */
-
 package com.lion.vip.tools.crypto;
 
 import java.io.Serializable;

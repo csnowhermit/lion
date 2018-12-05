@@ -1,9 +1,3 @@
-/**
- * FileName: Pair
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 15:48
- */
-
 package com.lion.vip.tools.common;
 
 /**

@@ -1,9 +1,3 @@
-/**
- * FileName: NettyTCPClient
- * Author:   Ren Xiaotian
- * Date:     2018/11/23 11:30
- */
-
 package com.lion.vip.network.netty.client;
 
 import com.lion.vip.api.service.BaseService;

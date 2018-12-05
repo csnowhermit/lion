@@ -1,9 +1,3 @@
-/**
- * FileName: Utils
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 15:09
- */
-
 package com.lion.vip.tools;
 
 import com.lion.vip.tools.config.CC;

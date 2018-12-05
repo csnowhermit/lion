@@ -1,9 +1,3 @@
-/**
- * FileName: RequestContext
- * Author:   Ren Xiaotian
- * Date:     2018/11/23 16:05
- */
-
 package com.lion.vip.network.netty.http;
 
 import com.google.common.primitives.Ints;

@@ -1,9 +1,3 @@
-/**
- * FileName: URI
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:04
- */
-
 package com.lion.vip.tools.common;
 
 import com.lion.vip.api.Constants;

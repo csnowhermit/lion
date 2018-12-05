@@ -1,9 +1,3 @@
-/**
- * FileName: MD5Utils
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:26
- */
-
 package com.lion.vip.tools.crypto;
 
 import com.lion.vip.api.Constants;

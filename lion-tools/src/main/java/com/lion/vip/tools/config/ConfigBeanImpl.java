@@ -1,9 +1,3 @@
-/**
- * FileName: ConfigBeanImpl
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 16:14
- */
-
 package com.lion.vip.tools.config;
 
 import com.typesafe.config.*;

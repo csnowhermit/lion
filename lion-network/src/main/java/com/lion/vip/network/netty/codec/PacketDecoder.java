@@ -1,9 +1,3 @@
-/**
- * FileName: PacketDecoder
- * Author:   Ren Xiaotian
- * Date:     2018/11/23 14:15
- */
-
 package com.lion.vip.network.netty.codec;
 
 import com.lion.vip.api.protocol.JsonPacket;

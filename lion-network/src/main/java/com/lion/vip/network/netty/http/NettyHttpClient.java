@@ -1,9 +1,3 @@
-/**
- * FileName: NettyHttpClient
- * Author:   Ren Xiaotian
- * Date:     2018/11/23 17:07
- */
-
 package com.lion.vip.network.netty.http;
 
 import com.lion.vip.api.service.BaseService;
