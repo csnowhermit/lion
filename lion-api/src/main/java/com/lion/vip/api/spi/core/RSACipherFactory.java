@@ -14,7 +14,7 @@ import com.lion.vip.api.spi.SpiLoader;
  * RSA加解密算法：工厂类
  */
 public interface RSACipherFactory extends Factory<RSACipherFactory> {
-    static Cipher create(){
-        return (Cipher) SpiLoader.load(RSACipherFactory.class).get();
+    static Cipher create() {
+        return SpiLoader.load(RSACipherFactory.class).get();
     }
 }

@@ -75,6 +75,14 @@ public final class ClientLocation {
         return this;
     }
 
+    public int getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(int clientType) {
+        this.clientType = clientType;
+    }
+
     /**
      * 是否上线
      *

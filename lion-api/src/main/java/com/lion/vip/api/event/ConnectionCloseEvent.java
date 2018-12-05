@@ -12,7 +12,7 @@ import com.lion.vip.api.connection.Connection;
  * 连接关闭事件
  */
 public class ConnectionCloseEvent implements Event {
-    private final Connection connection;
+    public final Connection connection;
 
     public ConnectionCloseEvent(Connection connection) {
         this.connection = connection;

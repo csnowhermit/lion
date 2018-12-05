@@ -31,7 +31,7 @@ public interface RouterManager<R extends Router> {
      * @param clientType 客户端类型
      * @return true，成功；false，失败
      */
-    boolean unregister(String userId, String clientType);
+    boolean unregister(String userId, int clientType);
 
     /**
      * 根据用户ID查找路由
@@ -48,6 +48,6 @@ public interface RouterManager<R extends Router> {
      * @param clientType 客户端类型
      * @return 指定类型的路由信息
      */
-    R lookup(String userId, String clientType);
+    R lookup(String userId, int clientType);
 
 }

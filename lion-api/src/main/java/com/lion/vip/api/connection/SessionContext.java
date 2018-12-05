@@ -17,7 +17,7 @@ public final class SessionContext {
     private String osVersion;    //操作系统版本号
     private String clientVersion;//客户端版本号
     private String deviceId;     //设备ID
-    private String userId;       //用户ID
+    public String userId;       //用户ID
     private String tags;         //用户标识
     private int heartbeat = 1000;    //心跳检测周期，10s
     public Cipher cipher;       //数据加解密接口
