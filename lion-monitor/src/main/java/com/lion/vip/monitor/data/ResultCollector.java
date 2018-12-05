@@ -1,9 +1,3 @@
-/**
- * FileName: ResultCollector
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 22:00
- */
-
 package com.lion.vip.monitor.data;
 
 import com.lion.vip.monitor.quota.impl.*;

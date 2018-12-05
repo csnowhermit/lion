@@ -1,9 +1,3 @@
-/**
- * FileName: SpiLoader
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 17:17
- */
-
 package com.lion.vip.api.spi;
 
 import com.lion.vip.api.service.Service;

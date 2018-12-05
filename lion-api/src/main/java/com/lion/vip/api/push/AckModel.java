@@ -1,9 +1,3 @@
-/**
- * FileName: AckModel
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 15:30
- */
-
 package com.lion.vip.api.push;
 
 import com.lion.vip.api.protocol.Packet;

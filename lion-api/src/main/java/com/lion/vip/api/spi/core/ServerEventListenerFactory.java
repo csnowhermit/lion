@@ -1,9 +1,3 @@
-/**
- * FileName: ServerEventListenerFactory
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 9:57
- */
-
 package com.lion.vip.api.spi.core;
 
 import com.lion.vip.api.common.ServerEventListener;

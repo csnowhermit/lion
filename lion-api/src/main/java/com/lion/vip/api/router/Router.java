@@ -1,9 +1,3 @@
-/**
- * FileName: Router
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 13:58
- */
-
 package com.lion.vip.api.router;
 
 /**

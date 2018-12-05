@@ -1,9 +1,3 @@
-/**
- * FileName: PushSender
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 15:17
- */
-
 package com.lion.vip.api.push;
 
 import com.lion.vip.api.LionContext;

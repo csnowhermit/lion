@@ -1,9 +1,3 @@
-/**
- * FileName: RouterChangeEvent
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 13:56
- */
-
 package com.lion.vip.api.event;
 
 import com.lion.vip.api.router.Router;

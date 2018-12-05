@@ -1,9 +1,3 @@
-/**
- * FileName: MQMessageReceiver
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 9:42
- */
-
 package com.lion.vip.api.spi.common;
 
 /**

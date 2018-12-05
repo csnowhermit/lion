@@ -1,9 +1,3 @@
-/**
- * FileName: Packet
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 11:35
- */
-
 package com.lion.vip.api.protocol;
 
 import io.netty.buffer.ByteBuf;

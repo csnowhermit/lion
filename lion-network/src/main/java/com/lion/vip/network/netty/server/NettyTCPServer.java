@@ -1,9 +1,3 @@
-/**
- * FileName: NettyTCPServer
- * Author:   Ren Xiaotian
- * Date:     2018/11/25 13:15
- */
-
 package com.lion.vip.network.netty.server;
 
 import com.lion.vip.api.service.BaseService;

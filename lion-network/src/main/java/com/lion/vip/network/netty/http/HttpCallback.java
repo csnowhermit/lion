@@ -1,9 +1,3 @@
-/**
- * FileName: HttpCallback
- * Author:   Ren Xiaotian
- * Date:     2018/11/23 16:02
- */
-
 package com.lion.vip.network.netty.http;
 
 import io.netty.handler.codec.http.HttpResponse;

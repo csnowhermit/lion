@@ -1,9 +1,3 @@
-/**
- * FileName: CommonServiceNode
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:55
- */
-
 package com.lion.vip.api.srd;
 
 import java.util.HashMap;

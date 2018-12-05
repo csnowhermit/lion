@@ -1,9 +1,3 @@
-/**
- * FileName: BaseService
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 10:11
- */
-
 package com.lion.vip.api.service;
 
 import java.util.concurrent.CompletableFuture;

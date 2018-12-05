@@ -1,9 +1,3 @@
-/**
- * FileName: ThreadQuota
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 20:34
- */
-
 package com.lion.vip.monitor.quota;
 
 /**

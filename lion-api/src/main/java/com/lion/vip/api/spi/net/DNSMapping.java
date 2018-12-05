@@ -1,9 +1,3 @@
-/**
- * FileName: DNSMapping
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 10:24
- */
-
 package com.lion.vip.api.spi.net;
 
 import java.net.URL;

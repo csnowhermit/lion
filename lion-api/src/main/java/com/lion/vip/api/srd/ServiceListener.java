@@ -1,9 +1,3 @@
-/**
- * FileName: ServiceListener
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:38
- */
-
 package com.lion.vip.api.srd;
 
 import com.lion.vip.api.event.Event;

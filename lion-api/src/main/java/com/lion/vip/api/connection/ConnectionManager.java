@@ -1,9 +1,3 @@
-/**
- * FileName: ConnectionManager
- * Author:   Ren Xiaotian
- * Date:     2018/11/19 20:38
- */
-
 package com.lion.vip.api.connection;
 
 import io.netty.channel.Channel;

@@ -1,9 +1,3 @@
-/**
- * FileName: NettyUDPConnector
- * Author:   Ren Xiaotian
- * Date:     2018/11/26 9:14
- */
-
 package com.lion.vip.network.netty.udp;
 
 import com.lion.vip.api.service.BaseService;

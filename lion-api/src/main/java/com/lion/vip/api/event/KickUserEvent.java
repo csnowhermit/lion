@@ -1,9 +1,3 @@
-/**
- * FileName: KickUserEvent
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 13:54
- */
-
 package com.lion.vip.api.event;
 
 /**

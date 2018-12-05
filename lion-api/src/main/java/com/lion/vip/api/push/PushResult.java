@@ -1,9 +1,3 @@
-/**
- * FileName: PushResult
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 14:35
- */
-
 package com.lion.vip.api.push;
 
 import com.lion.vip.api.router.ClientLocation;

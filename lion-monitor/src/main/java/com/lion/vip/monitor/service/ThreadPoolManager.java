@@ -1,9 +1,3 @@
-/**
- * FileName: ThreadPoolManager
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 21:57
- */
-
 package com.lion.vip.monitor.service;
 
 import com.lion.vip.api.spi.common.ExecutorFactory;

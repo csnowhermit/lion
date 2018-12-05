@@ -1,9 +1,3 @@
-/**
- * FileName: SessionContext
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 11:33
- */
-
 package com.lion.vip.api.connection;
 
 import com.lion.vip.api.router.ClientClassifier;

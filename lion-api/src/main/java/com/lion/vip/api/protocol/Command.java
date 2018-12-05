@@ -1,9 +1,3 @@
-/**
- * FileName: Command
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 14:13
- */
-
 package com.lion.vip.api.protocol;
 
 /**

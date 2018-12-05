@@ -1,9 +1,3 @@
-/**
- * FileName: MsgType
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 14:29
- */
-
 package com.lion.vip.api.push;
 
 /**

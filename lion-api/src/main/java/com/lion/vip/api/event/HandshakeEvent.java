@@ -1,9 +1,3 @@
-/**
- * FileName: HandshakeEvent
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 13:52
- */
-
 package com.lion.vip.api.event;
 
 import com.lion.vip.api.connection.Connection;

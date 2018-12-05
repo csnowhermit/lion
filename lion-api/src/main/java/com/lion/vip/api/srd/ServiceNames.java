@@ -1,9 +1,3 @@
-/**
- * FileName: ServiceNames
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:45
- */
-
 package com.lion.vip.api.srd;
 
 public interface ServiceNames {

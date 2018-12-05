@@ -1,9 +1,3 @@
-/**
- * FileName: PushListenerFactory
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 10:49
- */
-
 package com.lion.vip.api.spi.router;
 
 import com.lion.vip.api.router.ClientClassifier;

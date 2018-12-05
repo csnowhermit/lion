@@ -1,9 +1,3 @@
-/**
- * FileName: UDPChannelHandler
- * Author:   Ren Xiaotian
- * Date:     2018/11/26 9:46
- */
-
 package com.lion.vip.network.netty.udp;
 
 import com.lion.vip.api.message.PacketReceiver;

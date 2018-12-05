@@ -1,9 +1,3 @@
-/**
- * FileName: BroadcastController
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 15:31
- */
-
 package com.lion.vip.api.push;
 
 import java.util.List;

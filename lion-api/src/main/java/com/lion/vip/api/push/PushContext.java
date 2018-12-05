@@ -1,9 +1,3 @@
-/**
- * FileName: PushContext
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 14:44
- */
-
 package com.lion.vip.api.push;
 
 import com.lion.vip.api.Constants;

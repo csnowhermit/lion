@@ -1,9 +1,3 @@
-/**
- * FileName: RSACipherFactory
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 9:56
- */
-
 package com.lion.vip.api.spi.core;
 
 import com.lion.vip.api.connection.Cipher;

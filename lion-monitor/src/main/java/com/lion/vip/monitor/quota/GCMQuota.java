@@ -1,9 +1,3 @@
-/**
- * FileName: GCMQuota
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 20:30
- */
-
 package com.lion.vip.monitor.quota;
 
 /**

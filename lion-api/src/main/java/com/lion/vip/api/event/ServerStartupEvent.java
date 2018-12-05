@@ -1,9 +1,3 @@
-/**
- * FileName: ServerStartupEvent
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 13:59
- */
-
 package com.lion.vip.api.event;
 
 /**

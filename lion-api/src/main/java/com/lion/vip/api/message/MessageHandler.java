@@ -1,9 +1,3 @@
-/**
- * FileName: MessageHandler
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 14:10
- */
-
 package com.lion.vip.api.message;
 
 import com.lion.vip.api.connection.Connection;

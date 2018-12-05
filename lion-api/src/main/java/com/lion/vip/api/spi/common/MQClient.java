@@ -1,9 +1,3 @@
-/**
- * FileName: MQClient
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 9:36
- */
-
 package com.lion.vip.api.spi.common;
 
 import com.lion.vip.api.spi.Plugin;

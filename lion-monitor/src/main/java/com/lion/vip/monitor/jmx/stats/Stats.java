@@ -1,9 +1,3 @@
-/**
- * FileName: Stats
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 20:16
- */
-
 package com.lion.vip.monitor.jmx.stats;
 
 import java.util.Date;

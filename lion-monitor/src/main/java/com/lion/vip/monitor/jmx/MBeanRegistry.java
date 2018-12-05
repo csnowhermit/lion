@@ -1,9 +1,3 @@
-/**
- * FileName: MBeanRegistry
- * Author:   Ren Xiaotian
- * Date:     2018/11/26 14:31
- */
-
 package com.lion.vip.monitor.jmx;
 
 import org.slf4j.Logger;

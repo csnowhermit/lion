@@ -1,9 +1,3 @@
-/**
- * FileName: Constants
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:17
- */
-
 package com.lion.vip.api;
 
 import java.nio.charset.Charset;

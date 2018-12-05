@@ -1,9 +1,3 @@
-/**
- * FileName: MonitorResult
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 22:04
- */
-
 package com.lion.vip.monitor.data;
 
 import com.lion.vip.tools.Jsons;

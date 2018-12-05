@@ -1,9 +1,3 @@
-/**
- * FileName: UserOnlineEvent
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 14:02
- */
-
 package com.lion.vip.api.event;
 
 import com.lion.vip.api.connection.Connection;

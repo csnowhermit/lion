@@ -1,9 +1,3 @@
-/**
- * FileName: Spi
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 17:14
- */
-
 package com.lion.vip.api.spi;
 
 import java.lang.annotation.*;

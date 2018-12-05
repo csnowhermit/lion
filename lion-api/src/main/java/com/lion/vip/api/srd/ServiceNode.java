@@ -1,9 +1,3 @@
-/**
- * FileName: ServiceNode
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:46
- */
-
 package com.lion.vip.api.srd;
 
 /**

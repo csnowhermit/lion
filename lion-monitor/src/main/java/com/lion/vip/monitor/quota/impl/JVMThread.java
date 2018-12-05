@@ -1,9 +1,3 @@
-/**
- * FileName: JVMThread
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 21:28
- */
-
 package com.lion.vip.monitor.quota.impl;
 
 import com.google.common.collect.Maps;

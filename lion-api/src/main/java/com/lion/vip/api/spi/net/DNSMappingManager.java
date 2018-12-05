@@ -1,9 +1,3 @@
-/**
- * FileName: DNSMappingManager
- * Author:   Ren Xiaotian
- * Date:     2018/11/22 10:38
- */
-
 package com.lion.vip.api.spi.net;
 
 import com.lion.vip.api.service.Service;

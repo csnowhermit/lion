@@ -1,9 +1,3 @@
-/**
- * FileName: JVMInfo
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 21:03
- */
-
 package com.lion.vip.monitor.quota.impl;
 
 import com.google.common.collect.Maps;

@@ -1,9 +1,3 @@
-/**
- * FileName: Cipher
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 11:23
- */
-
 package com.lion.vip.api.connection;
 
 /**

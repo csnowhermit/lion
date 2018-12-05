@@ -1,9 +1,3 @@
-/**
- * FileName: ServerMXBean
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 20:19
- */
-
 package com.lion.vip.monitor.jmx.mxbean;
 
 public interface ServerMXBean {

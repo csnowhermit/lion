@@ -1,9 +1,3 @@
-/**
- * FileName: RouterManager
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 15:35
- */
-
 package com.lion.vip.api.router;
 
 import java.util.Set;

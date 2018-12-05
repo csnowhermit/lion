@@ -1,9 +1,3 @@
-/**
- * FileName: Monitor
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:20
- */
-
 package com.lion.vip.api.common;
 
 import java.util.concurrent.Executor;

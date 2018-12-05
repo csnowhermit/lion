@@ -1,9 +1,3 @@
-/**
- * FileName: PushMsg
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 15:02
- */
-
 package com.lion.vip.api.push;
 
 /**

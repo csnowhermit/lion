@@ -1,9 +1,3 @@
-/**
- * FileName: ExecutorFactory
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 22:09
- */
-
 package com.lion.vip.api.spi.common;
 
 import com.lion.vip.api.spi.SpiLoader;

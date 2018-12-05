@@ -1,9 +1,3 @@
-/**
- * FileName: ServiceRegistry
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:53
- */
-
 package com.lion.vip.api.srd;
 
 import com.lion.vip.api.service.Service;

@@ -1,9 +1,3 @@
-/**
- * FileName: MonitorService
- * Author:   Ren Xiaotian
- * Date:     2018/11/29 21:56
- */
-
 package com.lion.vip.monitor.service;
 
 import com.lion.vip.api.common.Monitor;

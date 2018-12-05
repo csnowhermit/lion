@@ -1,9 +1,3 @@
-/**
- * FileName: ServerEventListener
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 16:24
- */
-
 package com.lion.vip.api.common;
 
 import com.lion.vip.api.event.*;

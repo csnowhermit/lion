@@ -1,9 +1,3 @@
-/**
- * FileName: PushException
- * Author:   Ren Xiaotian
- * Date:     2018/11/21 15:01
- */
-
 package com.lion.vip.api.push;
 
 /**
