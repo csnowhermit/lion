@@ -1,9 +1,3 @@
-/**
- * FileName: ErrorCode
- * Author:   Ren Xiaotian
- * Date:     2018/11/30 19:55
- */
-
 package com.lion.vip.common;
 
 public enum ErrorCode {

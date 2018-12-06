@@ -1,4 +1,3 @@
-
 package com.lion.vip.common.user;
 
 import com.lion.vip.api.Constants;

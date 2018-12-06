@@ -1,9 +1,3 @@
-/**
- * FileName: CommonExecutorFactory
- * Author:   Ren Xiaotian
- * Date:     2018/11/30 20:16
- */
-
 package com.lion.vip.common;
 
 import com.lion.vip.api.spi.common.ExecutorFactory;

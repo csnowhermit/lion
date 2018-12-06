@@ -1,9 +1,3 @@
-/**
- * FileName: ScriptCondition
- * Author:   Ren Xiaotian
- * Date:     2018/11/30 20:31
- */
-
 package com.lion.vip.common.condition;
 
 import com.lion.vip.api.common.Condition;

@@ -1,9 +1,3 @@
-/**
- * FileName: PacketFactory
- * Author:   Ren Xiaotian
- * Date:     2018/12/1 13:25
- */
-
 package com.lion.vip.common.memory;
 
 import com.lion.vip.api.protocol.Command;

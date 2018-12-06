@@ -1,9 +1,3 @@
-/**
- * FileName: CacheKeys
- * Author:   Ren Xiaotian
- * Date:     2018/11/30 20:15
- */
-
 package com.lion.vip.common;
 
 public class CacheKeys {

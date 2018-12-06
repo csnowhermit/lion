@@ -1,9 +1,3 @@
-/**
- * FileName: ServerNodes
- * Author:   Ren Xiaotian
- * Date:     2018/11/30 20:07
- */
-
 package com.lion.vip.common;
 
 import com.lion.vip.api.srd.CommonServiceNode;

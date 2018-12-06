@@ -1,6 +1,5 @@
 package com.lion.vip.common.security;
 
-
 import com.lion.vip.api.connection.Cipher;
 import com.lion.vip.tools.crypto.AESUtils;
 

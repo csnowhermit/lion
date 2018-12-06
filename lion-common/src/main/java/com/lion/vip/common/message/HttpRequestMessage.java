@@ -1,9 +1,3 @@
-/**
- * FileName: HttpRequestMessage
- * Author:   ASUS
- * Date:     2018/12/5 16:55
- */
-
 package com.lion.vip.common.message;
 
 import com.lion.vip.api.connection.Connection;

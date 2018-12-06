@@ -1,9 +1,3 @@
-/**
- * FileName: AwaysPassCondition
- * Author:   Ren Xiaotian
- * Date:     2018/11/30 20:24
- */
-
 package com.lion.vip.common.condition;
 
 import com.lion.vip.api.common.Condition;

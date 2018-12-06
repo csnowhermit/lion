@@ -1,9 +1,3 @@
-/**
- * FileName: BaseMessage
- * Author:   Ren Xiaotian
- * Date:     2018/12/1 13:57
- */
-
 package com.lion.vip.common.message;
 
 import com.lion.vip.api.connection.Cipher;

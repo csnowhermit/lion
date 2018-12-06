@@ -1,9 +1,3 @@
-/**
- * FileName: MessageDispatcher
- * Author:   Ren Xiaotian
- * Date:     2018/11/30 19:57
- */
-
 package com.lion.vip.common;
 
 import com.lion.vip.api.connection.Connection;
