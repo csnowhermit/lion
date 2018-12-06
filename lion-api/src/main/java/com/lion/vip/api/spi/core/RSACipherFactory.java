@@ -7,8 +7,9 @@ import com.lion.vip.api.spi.SpiLoader;
 /**
  * RSA加解密算法：工厂类
  */
-public interface RSACipherFactory extends Factory<RSACipherFactory> {
+public interface RSACipherFactory extends Factory<Cipher> {
     static Cipher create() {
         return SpiLoader.load(RSACipherFactory.class).get();
     }
+
 }

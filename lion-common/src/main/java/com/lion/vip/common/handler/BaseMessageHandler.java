@@ -4,6 +4,7 @@ package com.lion.vip.common.handler;
 import com.lion.vip.api.connection.Connection;
 import com.lion.vip.api.message.MessageHandler;
 import com.lion.vip.api.protocol.Packet;
+import com.lion.vip.common.message.BaseMessage;
 import com.lion.vip.tools.common.Profiler;
 
 public abstract class BaseMessageHandler<T extends BaseMessage> implements MessageHandler {

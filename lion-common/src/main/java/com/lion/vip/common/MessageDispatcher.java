@@ -12,6 +12,7 @@ import com.lion.vip.api.message.PacketReceiver;
 import com.lion.vip.api.protocol.Command;
 import com.lion.vip.api.protocol.Packet;
 import com.lion.vip.api.spi.push.MessagePusher;
+import com.lion.vip.common.message.ErrorMessage;
 import com.lion.vip.tools.common.Profiler;
 import com.lion.vip.tools.log.Logs;
 import org.slf4j.Logger;
