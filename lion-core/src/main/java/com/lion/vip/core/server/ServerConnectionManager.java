@@ -1,9 +1,3 @@
-/**
- * FileName: ServerConnectionManager
- * Author:   Ren Xiaotian
- * Date:     2018/11/19 20:41
- */
-
 package com.lion.vip.core.server;
 
 import com.lion.vip.api.connection.Connection;

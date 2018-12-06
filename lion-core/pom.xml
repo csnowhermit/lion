@@ -14,6 +14,7 @@
     <name>lion-core</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+    <description>lion 消息推送系统 核心模块</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,15 +30,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.22.Final</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lion-network</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lion.vip</groupId>
-            <artifactId>lion-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lion-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lion-monitor</artifactId>
         </dependency>
     </dependencies>
 
