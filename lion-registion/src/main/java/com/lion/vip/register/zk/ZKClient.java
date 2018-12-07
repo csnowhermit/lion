@@ -7,15 +7,15 @@ import com.lion.vip.tools.log.Logs;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.ACLProvider;
+import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -83,8 +83,129 @@ public class ZKClient extends BaseService {
         });
     }
 
-    private void initLocalCache(String watchPath) {
+    private void reRegisterEphemeralSequential(final String key, final String value) {
+        registerEphemeralSequential(key, value, false);
+    }
 
+    public void registerEphemeralSequential(final String key, final String value) {
+        registerEphemeralSequential(key, value, true);
+    }
+
+    /**
+     * 注册临时顺序数据
+     *
+     * @param key
+     * @param value
+     * @param cacheNode
+     */
+    private void registerEphemeralSequential(final String key, final String value, boolean cacheNode) {
+        try {
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(key);
+        } catch (Exception ex) {
+            Logs.RSD.error("persistEphemeralSequential:{}", key, ex);
+            throw new ZKException(ex);
+        }
+    }
+
+    /**
+     * 注册临时数据
+     *
+     * @param key
+     * @param value
+     */
+    private void reRegisterEphemeral(final String key, final String value) {
+        registerEphemeral(key, value, false);
+    }
+
+    /**
+     * 注册临时数据
+     *
+     * @param nodePath
+     * @param toJson
+     */
+    public void registerEphemeral(String nodePath, String toJson) {
+        registerEphemeral(nodePath, toJson, true);
+    }
+
+
+    private void registerEphemeral(String key, String value, boolean b) {
+        try {
+            if (isExisted(key)) {
+                client.delete().deletingChildrenIfNeeded().forPath(key);
+            }
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(key, value.getBytes(Constants.UTF_8));
+            if (b) {
+                ephemeralNodes.put(key, value);
+            }
+        } catch (Exception ex) {
+            Logs.RSD.error("persistEphemeral:{},{}", key, value, ex);
+            throw new ZKException(ex);
+        }
+    }
+
+    /**
+     * 判断路径是否存在
+     *
+     * @param key
+     * @return
+     */
+    public boolean isExisted(final String key) {
+        try {
+            return null != client.checkExists().forPath(key);
+        } catch (Exception ex) {
+            Logs.RSD.error("isExisted:{}", key, ex);
+            return false;
+        }
+    }
+
+    /**
+     * 持久化数据
+     *
+     * @param key
+     * @param value
+     */
+    public void registerPersist(final String key, final String value) {
+        try {
+            if (isExisted(key)) {
+                update(key, value);
+            } else {
+                client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes());
+            }
+        } catch (Exception ex) {
+            Logs.RSD.error("persist:{},{}", key, value, ex);
+            throw new ZKException(ex);
+        }
+    }
+
+    /**
+     * 更新数据
+     *
+     * @param key
+     * @param value
+     */
+    public void update(final String key, final String value) {
+        try {
+//            TransactionOp op = client.transactionOp();
+//            client.transaction().forOperations(
+//                    op.check().forPath(key),
+//                    op.setData().forPath(key, value.getBytes(Constants.UTF_8))
+//            );
+            client.inTransaction().check().forPath(key).and().setData().forPath(key, value.getBytes(Constants.UTF_8)).and().commit();
+        } catch (Exception ex) {
+            Logs.RSD.error("update:{},{}", key, value, ex);
+            throw new ZKException(ex);
+        }
+    }
+
+
+    /**
+     * 启用本地缓存
+     *
+     * @param watchPath
+     */
+    private void initLocalCache(String watchPath) throws Exception {
+        cache = new TreeCache(client, watchPath);
+        cache.start();
     }
 
     @Override
@@ -155,25 +276,99 @@ public class ZKClient extends BaseService {
 
     }
 
+    /**
+     * 获取子节点
+     *
+     * @param serviceName
+     * @return
+     */
     public List<String> getChildrenKeys(String serviceName) {
+        try {
+            if (!isExisted(serviceName)) {
+                return Collections.emptyList();
+            }
+            List<String> result = client.getChildren().forPath(serviceName);
+            result.sort(Comparator.reverseOrder());
+            return result;
+        } catch (Exception ex) {
+            Logs.RSD.error("getChildrenKeys:{}", serviceName, ex);
+            return Collections.emptyList();
+        }
     }
 
-    public <R> R get(String s) {
+    /**
+     * 获取数据：先从本地获取，若没有，则从远端获取
+     *
+     * @param key
+     * @return
+     */
+    public String get(String key) {
+        if (null == cache) {
+            return null;
+        }
+        ChildData data = cache.getCurrentData(key);
+        if (null != data) {
+            return null == data.getData() ? null : new String(data.getData(), Constants.UTF_8);
+        }
+        return getFromRemote(key);
+
     }
 
+    /**
+     * 从远程获取数据
+     *
+     * @param nodePath
+     * @return
+     */
+    public String getFromRemote(final String nodePath) {
+        if (isExisted(nodePath)) {
+            try {
+                return new String(client.getData().forPath(nodePath), Constants.UTF_8);
+            } catch (Exception ex) {
+                Logs.RSD.error("getFromRemote:{}", nodePath, ex);
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 注册监听器
+     *
+     * @param zkCacheListener
+     */
     public void registerListener(ZKCacheListener zkCacheListener) {
-    }
-
-    public void registerPersist(String nodePath, String toJson) {
-    }
-
-    public void registerEphemeral(String nodePath, String toJson) {
+        cache.getListenable().addListener(zkCacheListener);
     }
 
     public boolean isRunning() {
+        return super.isRunning();
     }
 
+    /**
+     * 删除数据
+     *
+     * @param nodePath
+     */
     public void remove(String nodePath) {
+        try {
+            client.delete().deletingChildrenIfNeeded().forPath(nodePath);
+        } catch (Exception ex) {
+            Logs.RSD.error("removeAndClose:{}", nodePath, ex);
+            throw new ZKException(ex);
+        }
+    }
 
+    public ZKConfig getZKConfig() {
+        return zkConfig;
+    }
+
+    public ZKClient setZKConfig(ZKConfig zkConfig) {
+        this.zkConfig = zkConfig;
+        return this;
+    }
+
+    public CuratorFramework getClient() {
+        return client;
     }
 }
