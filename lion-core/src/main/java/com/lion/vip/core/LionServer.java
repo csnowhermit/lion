@@ -7,6 +7,7 @@ import com.lion.vip.api.spi.common.MQClient;
 import com.lion.vip.api.srd.ServiceDiscovery;
 import com.lion.vip.api.srd.ServiceNode;
 import com.lion.vip.api.srd.ServiceRegistry;
+import com.lion.vip.common.ServiceNodes;
 import com.lion.vip.core.push.PushCenter;
 import com.lion.vip.core.router.RouterCenter;
 import com.lion.vip.core.server.*;
@@ -30,10 +31,16 @@ public class LionServer implements LionContext {
 
     private HttpClient httpClient;     //http客户端
     private PushCenter pushCenter;     //推送中心
-    private ReusableSessionManager reusableSessionManager;
+    private ReusableSessionManager reusableSessionManager;    //可重复使用的session管理器
     private RouterCenter routerCenter;      //路由中心
     private MonitorService monitorService;  //监控服务
 
+    public LionServer() {
+        this.connServerNode =  ServiceNodes.cs();
+        this.gatewayServerNode = ServiceNodes.gs();
+        this.websocketServerNode = ServiceNodes.ws();
+
+    }
 
     @Override
     public Monitor getMonitor() {

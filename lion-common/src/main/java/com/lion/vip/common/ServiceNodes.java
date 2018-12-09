@@ -9,7 +9,7 @@ import com.lion.vip.tools.config.ConfigTools;
 /**
  * 供手机端连接的服务器的集合
  */
-public class ServerNodes {
+public class ServiceNodes {
 
     public static ServiceNode cs() {
         CommonServiceNode node = new CommonServiceNode();

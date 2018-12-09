@@ -13,6 +13,10 @@ public class ConnectionServer {
 
     public ConnectionServer(LionServer lionServer) {
         this.lionServer = lionServer;
-
+        this.connectionManager = new ServerConnectionManager(true);
     }
+
+
+
+
 }
