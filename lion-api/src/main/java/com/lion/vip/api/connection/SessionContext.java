@@ -7,62 +7,40 @@ import com.lion.vip.api.router.ClientClassifier;
  */
 public final class SessionContext {
 
-    private String osName;       //操作系统名称
-    private String osVersion;    //操作系统版本号
-    private String clientVersion;//客户端版本号
-    private String deviceId;     //设备ID
+    public String osName;       //操作系统名称
+    public String osVersion;    //操作系统版本号
+    public String clientVersion;//客户端版本号
+    public String deviceId;     //设备ID
     public String userId;       //用户ID
-    private String tags;         //用户标识
-    private int heartbeat = 1000;    //心跳检测周期，10s
+    public String tags;         //用户标识
+    public int heartbeat = 1000;    //心跳检测周期，10s
     public Cipher cipher;       //数据加解密接口
-    private byte clientType;    //客户端类型
+    public byte clientType;    //客户端类型
 
-    public String getOsName() {
-        return osName;
-    }
 
-    public String getOsVersion() {
-        return osVersion;
-    }
-
-    public String getClientVersion() {
-        return clientVersion;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public int getHeartbeat() {
-        return heartbeat;
-    }
-
-    public void setOsName(String osName) {
+    public SessionContext setOsName(String osName) {
         this.osName = osName;
+        return this;
     }
 
-    public void setOsVersion(String osVersion) {
+    public SessionContext setOsVersion(String osVersion) {
         this.osVersion = osVersion;
+        return this;
     }
 
-    public void setClientVersion(String clientVersion) {
+    public SessionContext setClientVersion(String clientVersion) {
         this.clientVersion = clientVersion;
+        return this;
     }
 
-    public void setDeviceId(String deviceId) {
+    public SessionContext setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+        return this;
     }
 
-    public void setUserId(String userId) {
+    public SessionContext setUserId(String userId) {
         this.userId = userId;
+        return this;
     }
 
     public void setTags(String tags) {

@@ -6,6 +6,8 @@ import com.lion.vip.api.service.Listener;
 import com.lion.vip.api.spi.handler.PushHandlerFactory;
 import com.lion.vip.common.MessageDispatcher;
 import com.lion.vip.core.LionServer;
+import com.lion.vip.core.handler.HandshakeHandler;
+import com.lion.vip.core.handler.HeartBeatHandler;
 import com.lion.vip.network.netty.server.NettyTCPServer;
 import com.lion.vip.tools.config.CC;
 import com.lion.vip.tools.thread.NamedPoolThreadFactory;
@@ -36,7 +38,7 @@ public class ConnectionServer extends NettyTCPServer {
 
     private MessageDispatcher messageDispatcher;    //做消息分发
 
-    private ServerChannelHandler channelHandler;
+    private ServerChannelHandler channelHandler;    //服务端Channel处理类
     private GlobalChannelTrafficShapingHandler trafficShapingHandler;
     private ScheduledExecutorService trafficShapingExecutor;
 
@@ -65,7 +67,8 @@ public class ConnectionServer extends NettyTCPServer {
         messageDispatcher.register(Command.ACK, () -> new AckHandler(lionServer));                //回应
         messageDispatcher.register(Command.HTTP_PROXY, () -> new HttpProxyHandler(lionServer), CC.lion.http.proxy_enabled);  //http代理
 
-        if (CC.lion.net.traffic_shaping.connect_server.enabled) {//启用流量整形，限流
+        //启用流量整形，限流
+        if (CC.lion.net.traffic_shaping.connect_server.enabled) {
             trafficShapingExecutor = Executors.newSingleThreadScheduledExecutor(new NamedPoolThreadFactory(T_TRAFFIC_SHAPING));
             trafficShapingHandler = new GlobalChannelTrafficShapingHandler(
                     trafficShapingExecutor,

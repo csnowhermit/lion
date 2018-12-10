@@ -128,9 +128,9 @@ public final class ClientLocation {
     public static ClientLocation from(Connection connection){
         SessionContext sessionContext = connection.getSessionContext();
         ClientLocation clientLocation = new ClientLocation();
-        clientLocation.setOsName(sessionContext.getOsName());
-        clientLocation.setClientVersion(sessionContext.getClientVersion());
-        clientLocation.setDeviceId(sessionContext.getDeviceId());
+        clientLocation.setOsName(sessionContext.osName);
+        clientLocation.setClientVersion(sessionContext.clientVersion);
+        clientLocation.setDeviceId(sessionContext.deviceId);
         clientLocation.setConnId(connection.getId());
 
         return clientLocation;

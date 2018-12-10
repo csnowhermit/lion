@@ -60,6 +60,110 @@ public class LionServer implements LionContext {
         }
     }
 
+    public ServiceNode getConnServerNode() {
+        return connServerNode;
+    }
+
+    public void setConnServerNode(ServiceNode connServerNode) {
+        this.connServerNode = connServerNode;
+    }
+
+    public ServiceNode getGatewayServerNode() {
+        return gatewayServerNode;
+    }
+
+    public void setGatewayServerNode(ServiceNode gatewayServerNode) {
+        this.gatewayServerNode = gatewayServerNode;
+    }
+
+    public ServiceNode getWebsocketServerNode() {
+        return websocketServerNode;
+    }
+
+    public void setWebsocketServerNode(ServiceNode websocketServerNode) {
+        this.websocketServerNode = websocketServerNode;
+    }
+
+    public ConnectionServer getConnectionServer() {
+        return connectionServer;
+    }
+
+    public void setConnectionServer(ConnectionServer connectionServer) {
+        this.connectionServer = connectionServer;
+    }
+
+    public WebsocketServer getWebsocketServer() {
+        return websocketServer;
+    }
+
+    public void setWebsocketServer(WebsocketServer websocketServer) {
+        this.websocketServer = websocketServer;
+    }
+
+    public GatewayServer getGatewayServer() {
+        return gatewayServer;
+    }
+
+    public void setGatewayServer(GatewayServer gatewayServer) {
+        this.gatewayServer = gatewayServer;
+    }
+
+    public AdminServer getAdminServer() {
+        return adminServer;
+    }
+
+    public void setAdminServer(AdminServer adminServer) {
+        this.adminServer = adminServer;
+    }
+
+    public GatewayUDPConnector getGatewayUDPConnector() {
+        return gatewayUDPConnector;
+    }
+
+    public void setGatewayUDPConnector(GatewayUDPConnector gatewayUDPConnector) {
+        this.gatewayUDPConnector = gatewayUDPConnector;
+    }
+
+    public HttpClient getHttpClient() {
+        return httpClient;
+    }
+
+    public void setHttpClient(HttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    public PushCenter getPushCenter() {
+        return pushCenter;
+    }
+
+    public void setPushCenter(PushCenter pushCenter) {
+        this.pushCenter = pushCenter;
+    }
+
+    public ReusableSessionManager getReusableSessionManager() {
+        return reusableSessionManager;
+    }
+
+    public void setReusableSessionManager(ReusableSessionManager reusableSessionManager) {
+        this.reusableSessionManager = reusableSessionManager;
+    }
+
+    public RouterCenter getRouterCenter() {
+        return routerCenter;
+    }
+
+    public void setRouterCenter(RouterCenter routerCenter) {
+        this.routerCenter = routerCenter;
+    }
+
+    public MonitorService getMonitorService() {
+        return monitorService;
+    }
+
+    public void setMonitorService(MonitorService monitorService) {
+        this.monitorService = monitorService;
+    }
+
     @Override
     public Monitor getMonitor() {
         return null;
