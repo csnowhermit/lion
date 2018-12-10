@@ -29,6 +29,7 @@ public class MessageDispatcher implements PacketReceiver {
     private final Map<Byte, MessageHandler> handlerMap = new HashMap<>();
     private final int unsupportedPolicy;
 
+
     public MessageDispatcher(int unsupportedPolicy) {
         this.unsupportedPolicy = unsupportedPolicy;
     }

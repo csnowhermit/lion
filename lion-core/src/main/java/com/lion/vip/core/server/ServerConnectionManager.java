@@ -2,16 +2,19 @@ package com.lion.vip.core.server;
 
 import com.lion.vip.api.connection.Connection;
 import com.lion.vip.api.connection.ConnectionManager;
-import com.lion.vip.common.ServerNodes;
 import com.lion.vip.network.netty.connection.NettyConnection;
 import com.lion.vip.tools.config.CC;
+import com.lion.vip.tools.thread.NamedThreadFactory;
+import com.lion.vip.tools.thread.ThreadNames;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
+import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 import io.netty.util.TimerTask;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -26,6 +29,7 @@ public final class ServerConnectionManager implements ConnectionManager {
     //定义个容器：保存<ChannelID， 连接持有者>的对应关系
     private ConcurrentHashMap<ChannelId, ConnectionHolder> connections = new ConcurrentHashMap<>();
     private ConnectionHolder DEFAULT = new SimpleConnectHolder(null);    //参数为空，是因为默认没有连接
+    private HashedWheelTimer timer;
 
 
     public ServerConnectionManager(boolean heartbeatcheck) {
@@ -160,17 +164,34 @@ public final class ServerConnectionManager implements ConnectionManager {
 
     @Override
     public int getConnNum() {
-        return 0;
+        return connections.size();
     }
 
     @Override
     public void init() {
+        if (heartbeatcheck) {
+            long ticksDuration = TimeUnit.SECONDS.toMillis(1);//1s 每秒走一步，心跳周期走一圈
+            int ticksPerWheel = (int) (CC.lion.core.max_heartbeat / ticksDuration);
 
+            this.timer = new HashedWheelTimer(
+                    new NamedThreadFactory(ThreadNames.T_CONN_TIMER),
+                    ticksDuration,
+                    TimeUnit.MILLISECONDS,
+                    ticksPerWheel
+            );
+
+        }
     }
 
     @Override
-    public void destory() {
+    public void destroy() {
+        if (timer != null) {
+            timer.stop();
+        }
 
+        //挨个儿将<ChannelID， 连接持有者>容器中的连接关闭
+        connections.values().forEach(ConnectionHolder::close);
+        connections.clear();    //再清空容器
     }
 
 }

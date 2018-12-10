@@ -44,7 +44,7 @@ public class NettyConnectionManager implements ConnectionManager {
      * 销毁连接管理器：先清空容器，关闭所有连接；再销毁
      */
     @Override
-    public void destory() {
+    public void destroy() {
         connectionConcurrentHashMap.values().forEach(Connection::close);
         connectionConcurrentHashMap.clear();
     }

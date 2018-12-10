@@ -14,6 +14,9 @@ import com.lion.vip.core.server.*;
 import com.lion.vip.core.session.ReusableSessionManager;
 import com.lion.vip.monitor.service.MonitorService;
 import com.lion.vip.network.netty.http.HttpClient;
+import com.lion.vip.tools.event.EventBus;
+
+import static com.lion.vip.tools.config.CC.lion.net.tcpGateway;
 
 /**
  * Lion 服务器程序
@@ -36,10 +39,25 @@ public class LionServer implements LionContext {
     private MonitorService monitorService;  //监控服务
 
     public LionServer() {
-        this.connServerNode =  ServiceNodes.cs();
+        this.connServerNode = ServiceNodes.cs();
         this.gatewayServerNode = ServiceNodes.gs();
         this.websocketServerNode = ServiceNodes.ws();
 
+        this.monitorService = new MonitorService();
+        EventBus.create(this.monitorService.getThreadPoolManager().getEventBusExecutor());
+
+        this.reusableSessionManager = new ReusableSessionManager();
+        this.pushCenter = new PushCenter(this);
+        this.routerCenter = new RouterCenter(this);
+        this.connectionServer = new ConnectionServer(this);
+        this.websocketServer = new WebsocketServer(this);
+        this.adminServer = new AdminServer(this);
+
+        if (tcpGateway()) {
+            this.gatewayServer = new GatewayServer(this);
+        } else {
+            this.gatewayUDPConnector = new GatewayUDPConnector(this);
+        }
     }
 
     @Override

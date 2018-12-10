@@ -45,5 +45,5 @@ public interface ConnectionManager {
     /**
      * 连接管理器销毁
      */
-    void destory();
+    void destroy();
 }

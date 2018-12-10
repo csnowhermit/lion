@@ -118,7 +118,8 @@ public abstract class NettyTCPServer extends BaseService implements Server {
 
     @Override
     public void init() {
-        if (serverState.compareAndSet(State.Created, State.Initialized)) {
+        //期望是Created，要更新为Initialized
+        if (!serverState.compareAndSet(State.Created, State.Initialized)) {
             throw new ServiceException("Server already inited");
         }
     }
@@ -279,7 +280,7 @@ public abstract class NettyTCPServer extends BaseService implements Server {
 
     }
 
-    private void initPipeline(ChannelPipeline pipeline) {
+    protected void initPipeline(ChannelPipeline pipeline) {
         pipeline.addLast("decoder", getDecoder());
         pipeline.addLast("encoder", getEncoder());
         pipeline.addLast("handler", getChannelHandler());
@@ -302,7 +303,7 @@ public abstract class NettyTCPServer extends BaseService implements Server {
      *
      * @param serverBootstrap
      */
-    private void initOptions(ServerBootstrap serverBootstrap) {
+    protected void initOptions(ServerBootstrap serverBootstrap) {
 //        serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE, false);    //使用应用层心跳
 
         /**
