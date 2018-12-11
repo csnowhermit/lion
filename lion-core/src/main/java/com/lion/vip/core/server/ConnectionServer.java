@@ -6,6 +6,7 @@ import com.lion.vip.api.service.Listener;
 import com.lion.vip.api.spi.handler.PushHandlerFactory;
 import com.lion.vip.common.MessageDispatcher;
 import com.lion.vip.core.LionServer;
+import com.lion.vip.core.handler.BindUserHandler;
 import com.lion.vip.core.handler.HandshakeHandler;
 import com.lion.vip.core.handler.HeartBeatHandler;
 import com.lion.vip.network.netty.server.NettyTCPServer;
@@ -27,6 +28,8 @@ import static com.lion.vip.tools.config.CC.lion.net.connect_server_port;
 import static com.lion.vip.tools.config.CC.lion.net.write_buffer_water_mark.connect_server_high;
 import static com.lion.vip.tools.config.CC.lion.net.write_buffer_water_mark.connect_server_low;
 import static com.lion.vip.tools.thread.ThreadNames.T_TRAFFIC_SHAPING;
+
+import static com.lion.vip.tools.config.CC.lion.net.traffic_shaping.connect_server.*;
 
 /**
  * 连接服务器

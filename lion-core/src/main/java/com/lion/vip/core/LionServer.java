@@ -164,8 +164,8 @@ public class LionServer implements LionContext {
     }
 
     @Override
-    public Monitor getMonitor() {
-        return this.monitorService;
+    public MonitorService getMonitor() {
+        return monitorService;
     }
 
     @Override

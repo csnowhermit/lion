@@ -31,13 +31,29 @@ public class GatewayServer extends NettyTCPServer {
         super(gateway_server_bind_ip, gateway_server_port);
         this.lionServer = lionServer;
         this.messageDispatcher = new MessageDispatcher();
-        this.connectionManager = new ServerConnectionManager();
+        this.connectionManager = new ServerConnectionManager(false);
         this.channelHandler = new ServerChannelHandler(true, connectionManager, messageDispatcher);
 
     }
 
     @Override
     public ChannelHandler getChannelHandler() {
-        return null;
+        return channelHandler;
+    }
+
+    public ConnectionManager getConnectionManager() {
+        return connectionManager;
+    }
+
+    public void setConnectionManager(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
+
+    public MessageDispatcher getMessageDispatcher() {
+        return messageDispatcher;
+    }
+
+    public void setMessageDispatcher(MessageDispatcher messageDispatcher) {
+        this.messageDispatcher = messageDispatcher;
     }
 }
