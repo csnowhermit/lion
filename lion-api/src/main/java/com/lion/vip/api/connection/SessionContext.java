@@ -51,6 +51,10 @@ public final class SessionContext {
         this.heartbeat = heartbeat;
     }
 
+    public int getHeartbeat() {
+        return heartbeat;
+    }
+
     public void changeCipher(Cipher cipher) {
         this.cipher = cipher;
     }

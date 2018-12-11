@@ -85,7 +85,7 @@ public abstract class NettyUDPConnector extends BaseService implements Server {
         }
     }
 
-    private void initOptions(Bootstrap bootstrap) {
+    protected void initOptions(Bootstrap bootstrap) {
         bootstrap.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
         bootstrap.option(ChannelOption.SO_REUSEADDR, true);
     }

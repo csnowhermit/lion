@@ -84,7 +84,7 @@ public class UDPChannelHandler extends ChannelInboundHandlerAdapter {
         return this;
     }
 
-    public NettyConnection getNettyConnection() {
+    public NettyConnection getConnection() {
         return nettyConnection;
     }
 

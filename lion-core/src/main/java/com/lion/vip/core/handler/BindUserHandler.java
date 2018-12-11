@@ -17,6 +17,8 @@ import com.lion.vip.common.message.OKMessage;
 import com.lion.vip.common.router.RemoteRouter;
 import com.lion.vip.common.router.RemoteRouterManager;
 import com.lion.vip.core.LionServer;
+import com.lion.vip.core.router.LocalRouter;
+import com.lion.vip.core.router.LocalRouterManager;
 import com.lion.vip.core.router.RouterCenter;
 import com.lion.vip.tools.event.EventBus;
 import com.lion.vip.tools.log.Logs;
@@ -24,7 +26,7 @@ import com.lion.vip.tools.log.Logs;
 /**
  * 绑定用户处理类
  */
-public class BindUserHandler extends BaseMessageHandler<BindUserMessage> {
+public final class BindUserHandler extends BaseMessageHandler<BindUserMessage> {
     private final BindValidator bindValidator = BindValidatorFactory.create();
 
     private RouterCenter routerCenter;    //路由中心
@@ -90,7 +92,7 @@ public class BindUserHandler extends BaseMessageHandler<BindUserMessage> {
                 Logs.CONN.info("bind user success, userId={}, session={}", message.userId, context);
             } else {
                 //注册失败的情况：防止本地注册成功，远程注册失败的情况；只有都成功了才叫成功
-                routerCenter.unregister(message.userId, context.getClientType());
+                routerCenter.unRegister(message.userId, context.getClientType());
                 ErrorMessage.from(message).setReason("bind failure").close();
                 Logs.CONN.info("bind user failure, userId={}, session={}", message.userId, context);
             }
@@ -114,7 +116,7 @@ public class BindUserHandler extends BaseMessageHandler<BindUserMessage> {
             boolean unRegisterSuccess = true;
             int clientType = context.getClientType();
             String userId = context.userId;
-            RemoteRouterManager remoteRouterManager = routerCenter.getRemoteRouteManager();    //得到远端路由管理器
+            RemoteRouterManager remoteRouterManager = routerCenter.getRemoteRouterManager();    //得到远端路由管理器
             RemoteRouter remoteRouter = remoteRouterManager.lookup(userId, clientType);
             if (routerCenter != null) {
                 String deviceId = remoteRouter.getRouteValue().getDeviceId();
@@ -127,9 +129,9 @@ public class BindUserHandler extends BaseMessageHandler<BindUserMessage> {
             LocalRouterManager localRouterManager = routerCenter.getLocalRouterManager();
             LocalRouter localRouter = localRouterManager.lookup(userId, clientType);
             if (localRouter != null) {
-                String deviceiD = localRouter.getRouterValue().getSessionContext().deviceId;
+                String deviceiD = localRouter.getRouteValue().getSessionContext().deviceId;
                 if (context.deviceId.equals(deviceiD)) {
-                    unRegisterSuccess = localRouterManager.unRegister(userId, clientType) && unRegisterSuccess;
+                    unRegisterSuccess = localRouterManager.unregister(userId, clientType) && unRegisterSuccess;
                 }
             }
 

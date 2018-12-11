@@ -2,8 +2,7 @@ package com.lion.vip.core;
 
 import com.lion.vip.api.LionContext;
 import com.lion.vip.api.common.Monitor;
-import com.lion.vip.api.spi.common.CacheManager;
-import com.lion.vip.api.spi.common.MQClient;
+import com.lion.vip.api.spi.common.*;
 import com.lion.vip.api.srd.ServiceDiscovery;
 import com.lion.vip.api.srd.ServiceNode;
 import com.lion.vip.api.srd.ServiceRegistry;
@@ -30,7 +29,7 @@ public class LionServer implements LionContext {
     public WebsocketServer websocketServer;       //websocket服务器
     private GatewayServer gatewayServer;          //网关服务器
     private AdminServer adminServer;              //后台管理员服务器
-    private GatewayUDPConnector gatewayUDPConnector;
+    private GatewayUDPConnector udpGatewayServer;
 
     private HttpClient httpClient;     //http客户端
     private PushCenter pushCenter;     //推送中心
@@ -56,7 +55,7 @@ public class LionServer implements LionContext {
         if (tcpGateway()) {
             this.gatewayServer = new GatewayServer(this);
         } else {
-            this.gatewayUDPConnector = new GatewayUDPConnector(this);
+            this.udpGatewayServer = new GatewayUDPConnector(this);
         }
     }
 
@@ -116,12 +115,12 @@ public class LionServer implements LionContext {
         this.adminServer = adminServer;
     }
 
-    public GatewayUDPConnector getGatewayUDPConnector() {
-        return gatewayUDPConnector;
+    public GatewayUDPConnector getUdpGatewayServer() {
+        return udpGatewayServer;
     }
 
-    public void setGatewayUDPConnector(GatewayUDPConnector gatewayUDPConnector) {
-        this.gatewayUDPConnector = gatewayUDPConnector;
+    public void setUdpGatewayServer(GatewayUDPConnector udpGatewayServer) {
+        this.udpGatewayServer = udpGatewayServer;
     }
 
     public HttpClient getHttpClient() {
@@ -166,28 +165,38 @@ public class LionServer implements LionContext {
 
     @Override
     public Monitor getMonitor() {
-        return null;
+        return this.monitorService;
     }
 
     @Override
     public ServiceDiscovery getDiscovery() {
-        return null;
+        return ServiceDiscoveryFactory.create();
     }
 
     @Override
     public ServiceRegistry getRegistry() {
-        return null;
+        return ServiceRegistryFactory.create();
     }
 
     @Override
     public CacheManager getCacheManager() {
-        return null;
+        return CacheManagerFactory.create();
     }
 
     @Override
     public MQClient getMQClient() {
-        return null;
+        return MQClientFactory.create();
     }
 
 
+    /**
+     * 判断本机是不是目标机器
+     *
+     * @param host
+     * @param port
+     * @return
+     */
+    public boolean isTargetMachine(String host, int port) {
+        return port == gatewayServerNode.getPort() && gatewayServerNode.getHost().equals(host);
+    }
 }
