@@ -33,6 +33,13 @@ public class RequestContext implements TimerTask, HttpCallback {
         this.request = request;
     }
 
+    public RequestContext(FullHttpRequest request, HttpCallback callback) {
+        this.callback = callback;
+        this.request = request;
+        this.uri = request.uri();
+        this.readTimeout = parseTimeout();
+    }
+
     private int parseTimeout() {
         String timeout = request.headers().get(Constants.HTTP_HEAD_READ_TIMEOUT);
         if (timeout != null) {

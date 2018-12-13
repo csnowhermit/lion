@@ -11,7 +11,6 @@ import com.lion.vip.tools.common.Profiler;
 import com.lion.vip.tools.config.CC;
 import com.lion.vip.tools.event.EventBus;
 import com.lion.vip.tools.log.Logs;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

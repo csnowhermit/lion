@@ -46,28 +46,40 @@ public class HttpProxyHandler extends BaseMessageHandler<HttpRequestMessage> {
 
     @Override
     public void handle(HttpRequestMessage message) {
-        //1.参数校验
-        String method = message.getMethod();
-        String uri = message.uri;
-        if (Strings.isNullOrEmpty(uri)) {
+        try {
+            //1.参数校验
+            String method = message.getMethod();
+            String uri = message.uri;
+            if (Strings.isNullOrEmpty(uri)) {
+                HttpResponseMessage.from(message)
+                        .setStatusCode(400)
+                        .setReasonPhrase("Bad Request")
+                        .sendRaw();
+                Logs.HTTP.warn("receive bad request url is empty, request={}", message);
+            }
+
+            //2.url转换
+            uri = doDNSMapping(uri);
+            Profiler.enter("time cost on [create FullHttpRequest]");
+
+            //3.包装成HttpRequest
+            FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.valueOf(method), uri, getBody(message));
+            setHeaders(request, message);    //设置header
+            Profiler.enter("time cost on [HttpClient.request]");
+
+            //4.发送请求
+            httpClient.request(new RequestContext(request, new DefaultHttpCallback(message)));
+        } catch (Exception e) {
             HttpResponseMessage.from(message)
-                    .setStatusCode(400)
-                    .setReasonPhrase("Bad Request")
+                    .setStatusCode(502)
+                    .setReasonPhrase("Bad Gateway")
                     .sendRaw();
-            Logs.HTTP.warn("receive bad request url is empty, request={}", message);
+
+            LOGGER.error("send request ex, message=" + message, e);
+            Logs.HTTP.error("send proxy request ex, request={}, eror={}", message, e.getMessage());
+        } finally {
+            Profiler.release();
         }
-
-        //2.url转换
-        uri = doDNSMapping(uri);
-        Profiler.enter("time cost on [create FullHttpRequest]");
-
-        //3.包装成HttpRequest
-        FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.valueOf(method), uri, getBody(message));
-        setHeaders(request, message);    //设置header
-        Profiler.enter("time cost on [HttpClient.request]");
-
-        //4.发送请求
-        httpClient.request(new RequestContext(request, new DefaultFullHttpCallback(message)));
     }
 
     /**
@@ -136,11 +148,11 @@ public class HttpProxyHandler extends BaseMessageHandler<HttpRequestMessage> {
     /**
      * 默认http回调类
      */
-    private static class DefaultFullHttpCallback implements HttpCallback {
+    private static class DefaultHttpCallback implements HttpCallback {
         private final HttpRequestMessage request;
         private int redirectCount;
 
-        public DefaultFullHttpCallback(HttpRequestMessage message) {
+        public DefaultHttpCallback(HttpRequestMessage message) {
             this.request = message;
         }
 
