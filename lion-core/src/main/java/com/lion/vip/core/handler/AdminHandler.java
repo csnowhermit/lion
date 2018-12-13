@@ -1,17 +1,22 @@
 package com.lion.vip.core.handler;
 
-import com.lion.vip.common.handler.BaseMessageHandler;
+import com.google.common.base.Strings;
+import com.lion.vip.common.router.RemoteRouter;
 import com.lion.vip.core.LionServer;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import org.apache.log4j.spi.OptionHandler;
+import com.lion.vip.tools.Jsons;
+import com.lion.vip.tools.common.Profiler;
+import com.lion.vip.tools.config.CC;
+import com.lion.vip.tools.config.ConfigTools;
+import com.typesafe.config.ConfigRenderOptions;
+import io.netty.channel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 
 /**
  * 后台管理器实现类
@@ -94,8 +99,59 @@ public class AdminHandler extends SimpleChannelInboundHandler<String> {
         });
     }
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+    private void register(String option, OptionHandler optionHandler) {
+        optionHandlerMap.put(option, optionHandler);
+    }
 
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, String request) throws Exception {
+        String option = "help";    //默认为help选项
+        String arg = null;
+        String[] args = null;
+
+        if (!Strings.isNullOrEmpty(request)) {
+            String[] cmd_args = request.split(" ");
+            option = cmd_args[0].trim().toLowerCase();
+
+            if (cmd_args.length == 2) {
+                arg = cmd_args[1];
+            } else if (cmd_args.length > 2) {
+                args = Arrays.copyOfRange(cmd_args, 1, cmd_args.length);
+            } else {
+
+            }
+        }
+
+        try {
+            Object result = optionHandlerMap.getOrDefault(option, unsupported_handler).handle(ctx, arg);
+            ChannelFuture future = ctx.writeAndFlush(result + EOL + EOL);
+            if ("quit".equals(option)) {
+                future.addListener(ChannelFutureListener.CLOSE);
+            }
+        } catch (Throwable throwable) {
+            ctx.writeAndFlush(throwable.getLocalizedMessage() + EOL + EOL);
+            StringWriter writer = new StringWriter(1024);
+            throwable.printStackTrace(new PrintWriter(writer));
+            ctx.writeAndFlush(writer.toString());
+        }
+        LOGGER.info("receive admin command={}", request);
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        ctx.write("Welcomt to Lion Console [ " + ConfigTools.getLocalIp() + " ] !" + EOL);
+        ctx.write("Since " + startTime + " has running " + startTime.until(LocalDateTime.now(), ChronoUnit.HOURS) + "(h)" + EOL);
+        ctx.write("It is " + new Date() + " now. " + EOL + EOL);
+        ctx.flush();
+    }
+
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        ctx.flush();
+    }
+
+    public interface OptionHandler {
+        Object handle(ChannelHandlerContext ctx, String args) throws Exception;
     }
 }
