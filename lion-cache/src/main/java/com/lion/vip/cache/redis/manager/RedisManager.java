@@ -1,5 +1,6 @@
 package com.lion.vip.cache.redis.manager;
 
+import com.google.common.collect.Lists;
 import com.lion.vip.api.spi.common.CacheManager;
 import com.lion.vip.cache.redis.connection.RedisConnectionFactory;
 import com.lion.vip.tools.Jsons;
@@ -220,7 +221,7 @@ public final class RedisManager implements CacheManager {
     public void hmset(String key, Map<String, String> hash, int time) {
         call(jedisCommands -> {
             jedisCommands.hmset(key, hash);
-            if (time>0){
+            if (time > 0) {
                 jedisCommands.expire(key, time);
             }
         });
@@ -237,26 +238,44 @@ public final class RedisManager implements CacheManager {
 
     @Override
     public Long zCard(String key) {
-        return null;
+        return call(jedisCommands -> jedisCommands.zcard(key), 0L);
     }
 
     @Override
     public void zRem(String key, String value) {
-
+        call(jedisCommands -> jedisCommands.zrem(key, value));
     }
 
     @Override
     public <T> List<T> zrange(String key, int start, int end, Class<T> clazz) {
+        Set<String> result = call(jedisCommands -> jedisCommands.zrange(key, start, end), null);
+        return toList(result, clazz);
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> List<T> toList(Collection<String> value, Class<T> clazz) {
+        if (value != null) {
+            if (clazz == String.class) {
+                return (List<T>) new ArrayList<T>((Collection<? extends T>) value);
+            }
+
+            List<T> newValue = Lists.newArrayList();
+            for (String s : value) {
+                newValue.add(Jsons.fromJson(s, clazz));
+            }
+            return newValue;
+        }
         return null;
     }
 
     @Override
     public void lpush(String key, String... value) {
-
+        call(jedisCommands -> jedisCommands.lpush(key, value));
     }
 
     @Override
     public <T> List<T> lrange(String key, int start, int end, Class<T> clazz) {
-        return null;
+        List<String> result = call(jedisCommands -> jedisCommands.lrange(key, start, end), null);
+        return (List<T>) result;
     }
 }
