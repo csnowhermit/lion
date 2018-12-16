@@ -37,6 +37,12 @@ public class MessageDispatcher implements PacketReceiver {
         this.unsupportedPolicy = unsupportedPolicy;
     }
 
+    /**
+     * 注册：将命令类型和所对应的处理器Handler关联上
+     *
+     * @param command
+     * @param handler
+     */
     public void register(Command command, MessageHandler handler) {
         handlerMap.put(command.cmd, handler);
     }

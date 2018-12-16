@@ -113,19 +113,26 @@ public final class ClientLocation {
 
     /**
      * 判断某个ip和端口是否是当前的主机
+     *
      * @param host
      * @param port
      * @return
      */
-    public boolean isThisMachine(String host, int port){
+    public boolean isThisMachine(String host, int port) {
         return this.port == port && this.host.equals(host);
     }
 
-    public String getHostAndPort(){
+    public String getHostAndPort() {
         return this.host + ":" + this.port;
     }
 
-    public static ClientLocation from(Connection connection){
+    /**
+     * 通过连接，拿到用户的位置在哪里
+     *
+     * @param connection
+     * @return
+     */
+    public static ClientLocation from(Connection connection) {
         SessionContext sessionContext = connection.getSessionContext();
         ClientLocation clientLocation = new ClientLocation();
         clientLocation.setOsName(sessionContext.osName);

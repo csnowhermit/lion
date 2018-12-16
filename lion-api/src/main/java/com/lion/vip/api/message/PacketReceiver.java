@@ -1,7 +1,7 @@
 package com.lion.vip.api.message;
 
-import com.lion.vip.api.connection.Connection;
-import com.lion.vip.api.protocol.Packet;
+        import com.lion.vip.api.connection.Connection;
+        import com.lion.vip.api.protocol.Packet;
 
 /**
  * 数据包接收接口

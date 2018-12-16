@@ -4,12 +4,10 @@ import com.google.common.collect.Lists;
 import com.lion.vip.api.spi.common.CacheManager;
 import com.lion.vip.cache.redis.connection.RedisConnectionFactory;
 import com.lion.vip.tools.Jsons;
+import com.lion.vip.tools.Utils;
 import com.lion.vip.tools.config.CC;
 import com.lion.vip.tools.log.Logs;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisCommands;
-import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.*;
 
 import java.io.StringWriter;
 import java.util.*;
@@ -21,7 +19,7 @@ import java.util.stream.Collectors;
  * Redis管理器
  */
 public final class RedisManager implements CacheManager {
-    private static final RedisManager I = new RedisManager();
+    public static final RedisManager I = new RedisManager();
     private final RedisConnectionFactory factory = new RedisConnectionFactory();
 
     @Override
@@ -278,4 +276,47 @@ public final class RedisManager implements CacheManager {
         List<String> result = call(jedisCommands -> jedisCommands.lrange(key, start, end), null);
         return (List<T>) result;
     }
+
+    /////////////////////////// redis pub/sub start ///////////////////////////
+
+    /**
+     * Redis pub/sub模式：publish
+     * @param channel
+     * @param message
+     */
+    public void publish(String channel, Object message){
+        String msg = message instanceof String? (String) message :Jsons.toJson(message);
+        call(jedisCommands -> {
+            if (jedisCommands instanceof MultiKeyCommands){
+                ((MultiKeyCommands) jedisCommands).publish(channel, msg);
+            }else if (jedisCommands instanceof MultiKeyJedisClusterCommands){
+                ((MultiKeyJedisClusterCommands) jedisCommands).publish(channel, msg);
+            }else{
+
+            }
+        });
+    }
+
+    /**
+     * Redis pub/sub模式：subscribe
+     * @param pubSub
+     * @param channel
+     */
+    public void subscribe(final JedisPubSub pubSub, final  String channel){
+        Utils.newThread(channel, () -> {
+            call(jedisCommands -> {
+                if (jedisCommands instanceof MultiKeyCommands){
+                    ((MultiKeyCommands) jedisCommands).subscribe(pubSub, channel);
+                }else if (jedisCommands instanceof MultiKeyJedisClusterCommands){
+                    ((MultiKeyJedisClusterCommands) jedisCommands).subscribe(pubSub, channel);
+                }else{
+
+                }
+            });
+        }).start();
+
+    }
+
+    /////////////////////////// redis pub/sub end ///////////////////////////
+
 }
