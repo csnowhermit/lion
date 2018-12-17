@@ -20,6 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <deploy.env>dev</deploy.env>
     </properties>
 
     <dependencies>
@@ -116,7 +117,7 @@
                                     <!--生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/-->
                                     <classpathPrefix>../lib/</classpathPrefix>
                                     <!--应用的main class-->
-                                    <mainClass>com.gupao.edu.lion.bootstrap.Main</mainClass>
+                                    <mainClass>com.lion.vip.bootstrap.Main</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
