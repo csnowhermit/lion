@@ -1,8 +1,5 @@
 package com.lion.vip.api.spi;
 
-import com.lion.vip.api.service.Service;
-import com.lion.vip.api.srd.ServiceListener;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +49,6 @@ public class SpiLoader {
         } else {
             throw new IllegalStateException("Cannot find META-INF/services/" + clazz.getName() + " on classpath");
         }
-
     }
 
     private static <T> T filterByName(ServiceLoader<T> factories, String name) {
