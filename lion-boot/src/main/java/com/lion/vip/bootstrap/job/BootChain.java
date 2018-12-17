@@ -75,7 +75,7 @@ public final class BootChain {
         });
     }
 
-    private BootChain setNext(BootJob bootJob) {
+    public BootChain setNext(BootJob bootJob) {
         this.last = last.setNext(bootJob);
         return this;
     }

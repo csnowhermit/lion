@@ -1,11 +1,8 @@
 package com.lion.vip.bootstrap;
 
 import com.lion.vip.api.common.ServerEventListener;
-import com.lion.vip.api.spi.common.CacheManager;
 import com.lion.vip.api.spi.core.ServerEventListenerFactory;
-import com.lion.vip.api.srd.ServiceDiscovery;
-import com.lion.vip.api.srd.ServiceRegistry;
-import com.lion.vip.bootstrap.job.BootChain;
+import com.lion.vip.bootstrap.job.*;
 import com.lion.vip.core.LionServer;
 import com.lion.vip.tools.config.CC;
 
@@ -63,10 +60,10 @@ public final class ServerLauncher {
                 .setNext(new CacheManagerBoot())          //1.启动缓存服务
                 .setNext(new ServiceRegistryBoot())       //2.启动服务注册
                 .setNext(new ServiceDiscoveryBoot())      //3.启动服务发现
-                .setNext(new ServerBoot(lionServer.getConnectionServer(), lionServer.getConnServerNode()))              //4.启动介入服务
-                .setNext(() -> new ServerBoot(lionServer.getWebsocketServer(), lionServer.getWebsocketServerNode()))    //5.启动WebSocket接入服务
-                .setNext(() -> new ServerBoot(lionServer.getUdpGatewayServer(), lionServer.getGatewayServerNode()))     //6.启动UDP网关服务
-                .setNext(() -> new ServerBoot(lionServer.getGatewayServer(), lionServer.getGatewayServerNode()))        //7.启动TCP网关服务
+                .setNext(new ServerBoot(lionServer.getConnectionServer(), lionServer.getConnServerNode()))              //4.启动接入服务
+                .setNext(new ServerBoot(lionServer.getWebsocketServer(), lionServer.getWebsocketServerNode()))    //5.启动WebSocket接入服务
+                .setNext(new ServerBoot(lionServer.getUdpGatewayServer(), lionServer.getGatewayServerNode()))     //6.启动UDP网关服务
+                .setNext(new ServerBoot(lionServer.getGatewayServer(), lionServer.getGatewayServerNode()))        //7.启动TCP网关服务
                 .setNext(new ServerBoot(lionServer.getAdminServer(), null))      //8.启动控制台服务
                 .setNext(new RouterCenterBoot(lionServer))       //9.启动路由中心
                 .setNext(new PushCenterBoot(lionServer))         //10.启动推送中心
