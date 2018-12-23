@@ -1,17 +1,19 @@
 package com.lion.vip.client.push;
 
-import com.lion.vip.api.push.AckModel;
-import com.lion.vip.api.push.PushCallback;
-import com.lion.vip.api.push.PushResult;
+import com.lion.vip.api.Constants;
+import com.lion.vip.api.push.*;
 import com.lion.vip.api.router.ClientLocation;
 import com.lion.vip.client.LionClient;
+import com.lion.vip.common.message.PushMessage;
 import com.lion.vip.common.message.gateway.GatewayPushMessage;
 import com.lion.vip.common.router.RemoteRouter;
+import com.lion.vip.tools.Jsons;
 import com.lion.vip.tools.common.TimeLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.server.RemoteServer;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -49,6 +51,13 @@ public final class PushRequest extends FutureTask<PushResult> {
     private String taskId;
     private Future<?> future;
     private PushResult result;
+
+
+    public FutureTask<PushResult> send(RemoteRouter remoteRouter) {
+        timeLine.begin();
+        send2ConnServer(remoteRouter);
+        return this;
+    }
 
     private void send2ConnServer(RemoteRouter remoteRouter) {
         timeLine.addTimePoint("lookup-remote");
@@ -124,6 +133,212 @@ public final class PushRequest extends FutureTask<PushResult> {
             }
         }
         LOGGER.info("push request {} end, {}, {}, {}", status, userId, location, timeLine);
+    }
+
+    /**
+     * run 方法会有两个地方的线程调用：
+     * 1.任务超时时会调用，见PushRequestBus.I.put(sessionId, PushRequest.this);
+     * 2.异步执行callback时，见PushRequestBus.I.asyncCall(this);
+     */
+    @Override
+    public void run() {
+        //判断任务是否超时，如果超时了，此时状态为init；否则应该是其他状态；
+        //因为从submit方法过来的状态都不是init
+        if (status.get() == Status.init) {
+            timeout();
+        } else {
+            callback.onResult(getResult());
+        }
+    }
+
+    private void timeout() {
+        //超时要把request从队列中移除，其他情况是XXHandler中移除的
+        if (lionClient.getPushRequestBus().getAndRemove(sessionId) != null) {
+            submit(Status.timeout);
+        }
+    }
+
+    private void offline() {
+        lionClient.getCachedRemoteRouterManager().invalidateLocalCache(userId);
+        submit(Status.offline);
+    }
+
+    private void success() {
+        submit(Status.success);
+    }
+
+    private void failure() {
+        submit(Status.failure);
+    }
+
+    public void onFailure() {
+        failure();
+    }
+
+    public void onRedirect() {
+        timeLine.addTimePoint("redirect");
+        LOGGER.warn("user route has changed, userId={}, location={}", userId, location);
+        //1. 清理一下缓存，确保查询的路由是正确的
+        lionClient.getCachedRemoteRouterManager().invalidateLocalCache(userId);
+        if (status.get() == Status.init) {//init表示任务还没有完成，还可以重新发送
+            //2. 取消前一次任务, 否则会有两次回调
+            if (lionClient.getPushRequestBus().getAndRemove(sessionId) != null) {
+                if (future != null && !future.isCancelled()) {
+                    future.cancel(true);
+                }
+            }
+            //3. 取最新的路由重发一次
+            send(lionClient.getCachedRemoteRouterManager().lookup(userId, location.getClientType()));
+        }
+    }
+
+    private PushResult getResult() {
+        if (result == null) {
+            result = new PushResult(status.get().ordinal())
+                    .setUserId(userId)
+                    .setLocation(location)
+                    .setTimeLine(timeLine.getTimePoints());
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean cancel(boolean mayInterruptIfRunning) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * 广播
+     *
+     * @return
+     */
+    public FutureTask<PushResult> broadcast() {
+        timeLine.begin();
+
+        boolean success = lionClient.getGatewayConnectionFactory().broadcast(
+                connection -> GatewayPushMessage.build(connection)
+                        .setUserId(userId)
+                        .setContent(content)
+                        .setTags(tags)
+                        .setCondition(condition)
+                        .setTaskId(taskId)
+                        .addFlag(ackModel.flag),
+                pushMessage -> {
+                    pushMessage.sendRaw(f -> {
+                        if (f.isSuccess()) {
+                            LOGGER.debug("send broadcast to gateway server success, userId={}, conn={}", userId, f.channel());
+                        } else {
+                            failure();
+                            LOGGER.error("send broadcast to gateway server failure, userId={}, conn={}", userId, f.channel(), f.cause());
+                        }
+                    });
+
+                    if (pushMessage.taskId == null) {
+                        sessionId = pushMessage.getSessionId();
+                        future = lionClient.getPushRequestBus().put(sessionId, PushMessage.this);
+                    }
+                }
+        );
+        if (!success) {
+            LOGGER.error("get gateway connection failure when broadcast.");
+            failure();
+        }
+
+        return this;
+    }
+
+    public FutureTask<PushResult> onOffline() {
+        offline();
+        return this;
+    }
+
+    public void onSuccess(GatewayPushResult result) {
+        if (result != null) timeLine.addTimePoints(result.timePoints);
+        submit(Status.success);
+    }
+
+    public long getTimeout() {
+        return timeout;
+    }
+
+    public PushRequest(LionClient lionClient) {
+        super(NONE);
+        this.lionClient = lionClient;
+    }
+
+    public static PushRequest build(LionClient lionClient, PushContext ctx) {
+        byte[] content = ctx.getContext();
+        PushMsg msg = ctx.getPushMsg();
+        if (msg != null) {
+            String json = Jsons.toJson(msg);
+            if (json != null) {
+                content = json.getBytes(Constants.UTF_8);
+            }
+        }
+
+        Objects.requireNonNull(content, "push content can not be null.");
+
+        return new PushRequest(lionClient)
+                .setAckModel(ctx.getAckModel())
+                .setUserId(ctx.getUserId())
+                .setTags(ctx.getTags())
+                .setCondition(ctx.getCondition())
+                .setTaskId(ctx.getTaskId())
+                .setContent(content)
+                .setTimeout(ctx.getTimeout())
+                .setCallback(ctx.getCallback());
+
+    }
+
+    public PushRequest setCallback(PushCallback callback) {
+        this.callback = callback;
+        return this;
+    }
+
+    public PushRequest setUserId(String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public PushRequest setContent(byte[] content) {
+        this.content = content;
+        return this;
+    }
+
+    public PushRequest setTimeout(int timeout) {
+        this.timeout = timeout;
+        return this;
+    }
+
+    public PushRequest setAckModel(AckModel ackModel) {
+        this.ackModel = ackModel;
+        return this;
+    }
+
+    public PushRequest setTags(Set<String> tags) {
+        this.tags = tags;
+        return this;
+    }
+
+    public PushRequest setCondition(String condition) {
+        this.condition = condition;
+        return this;
+    }
+
+    public PushRequest setTaskId(String taskId) {
+        this.taskId = taskId;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "PushRequest{" +
+                "content='" + (content == null ? -1 : content.length) + '\'' +
+                ", userId='" + userId + '\'' +
+                ", timeout=" + timeout +
+                ", location=" + location +
+                '}';
     }
 
 
