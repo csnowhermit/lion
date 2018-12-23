@@ -18,6 +18,9 @@ public class PushResult {
     public Object[] timeLine;
     public ClientLocation location;
 
+    public PushResult(int resultCode) {
+        this.resultCode = resultCode;
+    }
 
     public int getResultCode() {
         return resultCode;
