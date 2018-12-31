@@ -22,7 +22,7 @@ public class PushRequestBus extends BaseService {
         this.lionClient = lionClient;
     }
 
-    public Future<?> pur(int sessionId, PushRequest request) {
+    public Future<?> put(int sessionId, PushRequest request) {
         requestMap.put(sessionId, request);
         return scheduledExecutorService.schedule(request, request.getTimeout(), TimeUnit.MILLISECONDS);
     }

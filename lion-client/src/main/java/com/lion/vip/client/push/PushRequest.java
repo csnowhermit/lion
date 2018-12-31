@@ -6,13 +6,13 @@ import com.lion.vip.api.router.ClientLocation;
 import com.lion.vip.client.LionClient;
 import com.lion.vip.common.message.PushMessage;
 import com.lion.vip.common.message.gateway.GatewayPushMessage;
+import com.lion.vip.common.push.GatewayPushResult;
 import com.lion.vip.common.router.RemoteRouter;
 import com.lion.vip.tools.Jsons;
 import com.lion.vip.tools.common.TimeLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.rmi.server.RemoteServer;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -236,7 +236,7 @@ public final class PushRequest extends FutureTask<PushResult> {
 
                     if (pushMessage.taskId == null) {
                         sessionId = pushMessage.getSessionId();
-                        future = lionClient.getPushRequestBus().put(sessionId, PushMessage.this);
+                        future = lionClient.getPushRequestBus().put(sessionId, this);
                     }
                 }
         );
@@ -340,6 +340,5 @@ public final class PushRequest extends FutureTask<PushResult> {
                 ", location=" + location +
                 '}';
     }
-
 
 }

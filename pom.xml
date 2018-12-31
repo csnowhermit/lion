@@ -135,7 +135,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>lion-cacher</artifactId>
+                <artifactId>lion-cache</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- ================================================= -->

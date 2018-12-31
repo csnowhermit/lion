@@ -5,6 +5,7 @@ import com.lion.vip.api.common.Monitor;
 import com.lion.vip.api.spi.common.*;
 import com.lion.vip.api.srd.ServiceDiscovery;
 import com.lion.vip.api.srd.ServiceRegistry;
+import com.lion.vip.client.gateway.connection.GatewayConnectionFactory;
 import com.lion.vip.client.push.PushRequestBus;
 import com.lion.vip.common.message.PushMessage;
 import com.lion.vip.common.router.CachedRemoteRouterManager;

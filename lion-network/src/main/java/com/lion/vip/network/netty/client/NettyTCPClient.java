@@ -58,7 +58,7 @@ public abstract class NettyTCPClient extends BaseService implements Client {
         listener.onSuccess();
     }
 
-    private void initOptions(Bootstrap bootstrap) {
+    public void initOptions(Bootstrap bootstrap) {
         bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 4000);
         bootstrap.option(ChannelOption.TCP_NODELAY, true);
     }
@@ -116,11 +116,11 @@ public abstract class NettyTCPClient extends BaseService implements Client {
         createClient(listener, workerGroup, getChannelFactory());
     }
 
-    private ChannelFactory<? extends Channel> getChannelFactory() {
+    public ChannelFactory<? extends Channel> getChannelFactory() {
         return NioSocketChannel::new;
     }
 
-    private SelectorProvider getSelectorProvider() {
+    public SelectorProvider getSelectorProvider() {
         return SelectorProvider.provider();
     }
 
@@ -136,7 +136,7 @@ public abstract class NettyTCPClient extends BaseService implements Client {
         return 50;
     }
 
-    private int getWorkerThreadNum() {
+    protected int getWorkerThreadNum() {
         return 1;
     }
 
