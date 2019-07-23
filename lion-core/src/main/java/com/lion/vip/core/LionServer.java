@@ -1,12 +1,11 @@
 package com.lion.vip.core;
 
 import com.lion.vip.api.LionContext;
-import com.lion.vip.api.common.Monitor;
 import com.lion.vip.api.spi.common.*;
 import com.lion.vip.api.srd.ServiceDiscovery;
 import com.lion.vip.api.srd.ServiceNode;
 import com.lion.vip.api.srd.ServiceRegistry;
-import com.lion.vip.common.ServiceNodes;
+import com.lion.vip.common.ServerNodes;
 import com.lion.vip.core.push.PushCenter;
 import com.lion.vip.core.router.RouterCenter;
 import com.lion.vip.core.server.*;
@@ -38,9 +37,9 @@ public class LionServer implements LionContext {
     private MonitorService monitorService;  //监控服务
 
     public LionServer() {
-        this.connServerNode = ServiceNodes.cs();
-        this.gatewayServerNode = ServiceNodes.gs();
-        this.websocketServerNode = ServiceNodes.ws();
+        this.connServerNode = ServerNodes.cs();
+        this.gatewayServerNode = ServerNodes.gs();
+        this.websocketServerNode = ServerNodes.ws();
 
         this.monitorService = new MonitorService();
         EventBus.create(this.monitorService.getThreadPoolManager().getEventBusExecutor());
